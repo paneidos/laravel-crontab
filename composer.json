@@ -1,0 +1,18 @@
+{
+    "name": "paneidos/laravel-crontab",
+    "description": "Generate a crontab from your schedule",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sernin van de Krol",
+            "email": "serninpc@paneidos.net"
+        }
+    ],
+    "require": {
+        "php": ">=7"
+    },
+    "autoload": {
+        "Paneidos\\LaravelCrontab\\": "src"
+    }
+}
