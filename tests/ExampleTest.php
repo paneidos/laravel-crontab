@@ -1,6 +1,6 @@
 <?php
 
-namespace Paneidos\LaravelCrontab;
+namespace Paneidos\LaravelCrontab\Tests;
 
 use PHPUnit\Framework\TestCase;
 
