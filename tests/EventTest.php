@@ -24,4 +24,20 @@ class EventTest extends TestCase
         $eventConverter = new EventConverter($event);
         $this->assertFalse($eventConverter->isConvertable());
     }
+
+    public function testCanConvertEventWithCommand()
+    {
+        $event = new Event(new DummyEventMutex(), 'update:status');
+        $eventConverter = new EventConverter($event);
+        $this->assertTrue($eventConverter->isConvertable());
+    }
+
+    public function testSimpleCommand()
+    {
+        $event = new Event(new DummyEventMutex(), 'update:status');
+        $eventConverter = new EventConverter($event);
+        $this->assertEquals('* * * * *', $eventConverter->getExpression());
+        $this->assertEquals("update:status > '/dev/null' 2>&1", $eventConverter->buildCommand());
+        $this->assertEquals("* * * * * update:status > '/dev/null' 2>&1", $eventConverter->getCrontabLine());
+    }
 }

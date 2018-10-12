@@ -18,4 +18,23 @@ class EventConverter
     {
         return !($this->event instanceof CallbackEvent) && !empty($this->event->command);
     }
+
+    public function getCrontabLine()
+    {
+        $expression = $this->getExpression();
+
+        $command = $this->buildCommand();
+
+        return "{$expression} {$command}";
+    }
+
+    public function getExpression()
+    {
+        return $this->event->expression;
+    }
+
+    public function buildCommand()
+    {
+        return $this->event->buildCommand();
+    }
 }
