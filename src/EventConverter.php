@@ -19,11 +19,11 @@ class EventConverter
         return !($this->event instanceof CallbackEvent) && !empty($this->event->command);
     }
 
-    public function getCrontabLine()
+    public function getCrontabLine($workingDirectory = null)
     {
         $expression = $this->getExpression();
 
-        $command = $this->buildCommand();
+        $command = $this->buildCommand($workingDirectory);
 
         return "{$expression} {$command}";
     }
@@ -33,8 +33,12 @@ class EventConverter
         return $this->event->expression;
     }
 
-    public function buildCommand()
+    public function buildCommand($workingDirectory = null)
     {
-        return $this->event->buildCommand();
+        $command = $this->event->buildCommand();
+        if ($workingDirectory) {
+            $command = "cd " . escapeshellarg($workingDirectory) . " && " . $command;
+        }
+        return $command;
     }
 }

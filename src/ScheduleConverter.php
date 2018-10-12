@@ -14,10 +14,10 @@ class ScheduleConverter
         $this->schedule = $schedule;
     }
 
-    public function getCrontabLines()
+    public function getCrontabLines($workingDirectory = null)
     {
-        return array_map(function (Event $event) {
-            return (new EventConverter($event))->getCrontabLine();
+        return array_map(function (Event $event) use ($workingDirectory) {
+            return (new EventConverter($event))->getCrontabLine($workingDirectory);
         }, $this->schedule->events());
     }
 }

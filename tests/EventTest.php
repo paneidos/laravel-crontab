@@ -40,4 +40,19 @@ class EventTest extends TestCase
         $this->assertEquals("update:status > '/dev/null' 2>&1", $eventConverter->buildCommand());
         $this->assertEquals("* * * * * update:status > '/dev/null' 2>&1", $eventConverter->getCrontabLine());
     }
+
+    public function testSetsWorkingDirectoryCommand()
+    {
+        $event = new Event(new DummyEventMutex(), 'update:status');
+        $eventConverter = new EventConverter($event);
+        $this->assertEquals('* * * * *', $eventConverter->getExpression());
+        $this->assertEquals(
+            "cd '/home/app' && update:status > '/dev/null' 2>&1",
+            $eventConverter->buildCommand('/home/app')
+        );
+        $this->assertEquals(
+            "* * * * * cd '/home/app' && update:status > '/dev/null' 2>&1",
+            $eventConverter->getCrontabLine('/home/app')
+        );
+    }
 }
