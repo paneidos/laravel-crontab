@@ -17,4 +17,11 @@ class EventTest extends TestCase
         $eventConverter = new EventConverter($event);
         $this->assertFalse($eventConverter->isConvertable());
     }
+
+    public function testCannotConvertEventWithoutCommand()
+    {
+        $event = new Event(new DummyEventMutex(), '');
+        $eventConverter = new EventConverter($event);
+        $this->assertFalse($eventConverter->isConvertable());
+    }
 }

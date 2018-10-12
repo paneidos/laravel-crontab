@@ -16,6 +16,6 @@ class EventConverter
 
     public function isConvertable(): bool
     {
-        return !($this->event instanceof CallbackEvent);
+        return !($this->event instanceof CallbackEvent) && !empty($this->event->command);
     }
 }
